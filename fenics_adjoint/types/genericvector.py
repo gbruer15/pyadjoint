@@ -363,6 +363,12 @@ class GenericVectorMixin(OverloadedType):
         return self.size()
         # return self.local_size()
 
+    @staticmethod
+    def _ad_assign_numpy(dst, src, offset):
+        # Not sure what assumptions to use here for parallel vectors.
+        dst.set_local(src)
+        return dst, offset + dst.size()
+
 
 def _reverse_block(block):
     class ReversedBlock(block):
